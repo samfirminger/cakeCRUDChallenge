@@ -4,6 +4,7 @@ import {Route, Switch} from "react-router-dom";
 import {GlobalStyle} from "./components/GlobalStyle";
 import Home from "./components/Home"
 import Cake from "./components/Cake"
+import NewCake from "./components/NewCake";
 import ScrollToTop from "./components/ScrollToTop";
 
 class App extends Component {
@@ -16,13 +17,14 @@ class App extends Component {
             <Switch>
                 <Route exact path='/' component={props => <Home {...props} />}/>
                 <Route path='/cake/:id' component={props => <Cake {...props} />}/>
+                <Route path='/newCake' component={props => <NewCake {...props} />}/>
             </Switch>
         </div>
     )
     return (
         <Switch>
             <ScrollToTop>
-            <App/>
+                <App/>
             </ScrollToTop>
         </Switch>
     );

@@ -2,6 +2,7 @@ import {Link} from "react-router-dom";
 import React from "react";
 import styled from "styled-components";
 import {device} from "./device";
+import plus from "../images/plus.png";
 
 const CakeListWrapper = styled.div`
     overflow: hidden;
@@ -29,6 +30,7 @@ const CakeWrapper = styled.div`
 `;
 
 const CakeImage = styled.img`
+    background: rgba(255,255,255,.6);
     object-fit: cover;
     width: 250px;
     height: 250px;
@@ -44,8 +46,7 @@ const CakeName = styled.p`
 
 const CakeList = ({cakes}) => {
 
-    return <CakeListWrapper>
-    {cakes.map((item) => {
+    const cakeMap = cakes.map((item) => {
             return (
                 <CakeWrapper key={item.id}>
                     <Link to={`/cake/${item.id}`} style={{ textDecoration: 'none', color: 'black' }} >
@@ -54,7 +55,17 @@ const CakeList = ({cakes}) => {
                     </Link>
                 </CakeWrapper>
             );
-        })}
+        });
+
+    cakeMap.unshift(<CakeWrapper key={'addNew'}>
+        <Link to={`/newCake`} style={{ textDecoration: 'none', color: 'black' }} >
+            <CakeImage src={plus}/>
+            <CakeName>Add New Cake</CakeName>
+        </Link>
+    </CakeWrapper>);
+
+    return <CakeListWrapper>
+    {cakeMap}
     </CakeListWrapper>
 
 };

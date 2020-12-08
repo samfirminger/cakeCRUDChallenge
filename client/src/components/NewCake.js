@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {useHistory} from "react-router";
 import {css} from 'styled-components';
 import {device} from "./device";
+import {Link} from "react-router-dom";
 
 const sharedStyle = css`
     @media ${device.mobileS} {
@@ -32,6 +33,9 @@ const sharedStyle = css`
 `
 
 const NewCakeFormWrapper = styled.div`
+    margin: 0 auto;
+    margin-top: 100px;
+    text-align: center;
 
 `;
 
@@ -76,6 +80,7 @@ const NewCake = () => {
     const [comment, setComment] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [yumFactor, setYumFactor] = useState('');
+    const [disabled, setDisabled] = useState(true);
     const history = useHistory();
 
     function handleSubmit(event) {
@@ -96,7 +101,7 @@ const NewCake = () => {
             body: JSON.stringify(cake)
         }).then(response => {
             response.json();
-            history.go(0);
+            history.push('/');
         });
 
         setName('');
@@ -106,7 +111,13 @@ const NewCake = () => {
 
     }
 
+    function createButtonDisabled() {
+        console.log(name, comment, imageUrl, yumFactor);
+        return name && comment && imageUrl && yumFactor ? 'true' : 'false';
+    }
+
     return <NewCakeFormWrapper>
+        <Link to={`/`} style={{textDecoration: 'none', color: 'black'}}><h1>Home</h1></Link>
         <NewCakeForm onSubmit={handleSubmit}>
             <div className="form-group">
                 <FormInput
@@ -155,7 +166,7 @@ const NewCake = () => {
             </div>
 
             <div>
-                <SubmitButton type="submit">
+                <SubmitButton type="submit" disabled={!(name && comment && imageUrl && yumFactor)}>
                     Create
                 </SubmitButton>
             </div>
