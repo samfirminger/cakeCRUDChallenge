@@ -27,9 +27,9 @@ app.get("/", (req, res, next) => {
 });
 
 // Insert here other API endpoints
-app.get("/api/users", (req, res, next) => {
-    console.log("Getting all users");
-    var sql = "select * from user";
+app.get("/api/cakes", (req, res, next) => {
+    console.log("Getting all cakes...");
+    var sql = "select * from cake";
     var params = [];
     db.all(sql, params, (err, rows) => {
         if (err) {
@@ -43,9 +43,10 @@ app.get("/api/users", (req, res, next) => {
     });
 });
 
-app.get("/api/user/:id", (req, res, next) => {
-    var sql = "select * from user where id = ?";
-    var params = [req.params.id]
+app.get("/api/cake/:id", (req, res, next) => {
+    console.log(`Getting cake for id ${req.params.id}...`);
+    var sql = "select * from cake where id = ?";
+    var params = [req.params.id];
     db.get(sql, params, (err, row) => {
         if (err) {
             res.status(400).json({"error":err.message});
@@ -59,7 +60,7 @@ app.get("/api/user/:id", (req, res, next) => {
 });
 
 
-app.post("/api/user/", (req, res, next) => {
+app.post("/api/cake/", (req, res, next) => {
     var errors=[]
     if (!req.body.password){
         errors.push("No password specified");
@@ -76,7 +77,7 @@ app.post("/api/user/", (req, res, next) => {
         email: req.body.email,
         password : md5(req.body.password)
     }
-    var sql ='INSERT INTO user (name, email, password) VALUES (?,?,?)'
+    var sql ='INSERT INTO cake (name, email, password) VALUES (?,?,?)'
     var params =[data.name, data.email, data.password]
     db.run(sql, params, function (err, result) {
         if (err){

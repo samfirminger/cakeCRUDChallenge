@@ -1,9 +1,17 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import styled from "styled-components";
+import CakeList from "./CakeList";
 import {Link} from "react-router-dom";
+
+const HomeWrapper = styled.div`
+    margin: 0 auto;
+    margin-top: 100px;
+    text-align: center;
+`;
 
 class Home extends Component {
     // Initialize the state
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             cakes: []
@@ -17,41 +25,31 @@ class Home extends Component {
 
     // Retrieves the list of items from the Express app
     getCakes = () => {
-        fetch('/api/users')
+        fetch('/api/cakes')
             .then(res => res.json())
             .then(cakes => {
                 cakes = cakes.data;
-                console.log(cakes);
-                this.setState({ cakes })
+                this.setState({cakes})
             })
     }
 
     render() {
-        const { cakes } = this.state;
+        const {cakes} = this.state;
 
         return (
             <div className="App">
-                <h1>List of Cakes</h1>
-                {/* Check to see if any items are found*/}
+                <HomeWrapper>
+                <Link to={`/`} style={{ textDecoration: 'none', color: 'black' }}><h1>The Cake Database</h1></Link>
+
                 {cakes.length ? (
-                    <div>
-                        {/* Render the list of items */}
-                        {cakes.map((item) => {
-                            return(
-                                <Link to={`/user/${item.id}`} key={item.id}>
-                                    <div>
-                                        {item.id}
-                                    </div>
-                                </Link>
-                            );
-                        })}
-                    </div>
+                    <CakeList cakes={cakes}/>
                 ) : (
                     <div>
-                        <h2>No List Items Found</h2>
+                        <h2>No Cakes Found</h2>
                     </div>
                 )
                 }
+                </HomeWrapper>
             </div>
         );
     }
