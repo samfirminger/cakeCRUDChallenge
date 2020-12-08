@@ -1,6 +1,35 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
 import {useHistory} from "react-router";
+import {css} from 'styled-components';
+import {device} from "./device";
+
+const sharedStyle = css`
+    @media ${device.mobileS} {
+        width: 250px;
+
+    }
+    
+    @media ${device.tablet} {
+        width: 400px;
+    }
+
+
+    @media ${device.laptop} {
+        width: 400px;
+    }
+
+    margin-bottom: 2vh;
+    border-right: none;
+    border-top: none;
+    border-left: none;
+    background-color:transparent;
+    outline: none;
+    color: black;
+    caret-color: white;
+    height: 40px;
+    font-size: 20px;
+`
 
 const NewCakeFormWrapper = styled.div`
 
@@ -12,17 +41,7 @@ const NewCakeForm = styled.form`
 `;
 
 const FormInput = styled.input`
-    margin-bottom: 2vh;
-    border-right: none;
-    border-top: none;
-    border-left: none;
-    background-color:transparent;
-    outline: none;
-    color: black;
-    caret-color: white;
-    width: 200px;
-    height: 40px;
-    font-size: 20px;
+    ${sharedStyle}
     
     ::placeholder {
         color: grey;
@@ -31,23 +50,9 @@ const FormInput = styled.input`
 `;
 
 const DropDown = styled.select`
-    margin-bottom: 2vh;
+    ${sharedStyle}
     border-width: 2px;
-    border-right: none;
-    border-top: none;
-    border-left: none;
-    background-color:transparent;
-    outline: none;
-    color: grey;
-    caret-color: white;
-    width: 200px;
-    height: 40px;
-    font-size: 20px;
 
-
-    ::placeholder {
-        color: grey;
-    }
 `;
 
 const SelectLabel = styled.span`
@@ -55,7 +60,7 @@ const SelectLabel = styled.span`
 `;
 
 const SubmitButton = styled.button`
-    background: rgba(255,255,255,.2);
+    background: rgba(255,255,255,.4);
     padding: 2vh;
     border: none;
     cursor: pointer;
@@ -88,8 +93,7 @@ const NewCake = () => {
             method: 'POST',
             headers: new Headers({'content-type': 'application/json'}),
             body: JSON.stringify(cake)
-        }).then(response =>
-        {
+        }).then(response => {
             response.json();
             history.go(0);
         });
@@ -103,7 +107,7 @@ const NewCake = () => {
 
     return <NewCakeFormWrapper>
         <NewCakeForm onSubmit={handleSubmit}>
-            <div  className="form-group">
+            <div className="form-group">
                 <FormInput
                     type="text"
                     className="form-control"
@@ -127,7 +131,7 @@ const NewCake = () => {
                 />
             </div>
 
-            <div  className="form-group">
+            <div className="form-group">
                 <FormInput
                     type="text"
                     className="form-control"
@@ -138,7 +142,7 @@ const NewCake = () => {
                 />
             </div>
 
-            <div  className="form-group">
+            <div className="form-group">
                 <DropDown name="yumFactor" value={yumFactor} onChange={e => setYumFactor(e.target.value)}>
                     <option value="" disabled selected>Yum Factor</option>
                     <option value={1}>1</option>
@@ -149,7 +153,7 @@ const NewCake = () => {
                 </DropDown>
             </div>
 
-            <div >
+            <div>
                 <SubmitButton type="submit">
                     Create
                 </SubmitButton>

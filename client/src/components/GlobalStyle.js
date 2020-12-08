@@ -1,5 +1,5 @@
 import {createGlobalStyle} from 'styled-components';
-import backgroundImg from "../images/gradient.jpg";
+import backgroundImg from "../images/gradient2.jpg";
 
 export const GlobalStyle = createGlobalStyle`
   * {

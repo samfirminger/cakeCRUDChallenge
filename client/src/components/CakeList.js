@@ -4,7 +4,8 @@ import styled from "styled-components";
 import {device} from "./device";
 
 const CakeListWrapper = styled.div`
-    margin-bottom: 50px;
+    overflow: hidden;
+    margin-bottom: 100px;
 `;
 
 
