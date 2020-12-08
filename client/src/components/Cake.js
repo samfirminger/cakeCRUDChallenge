@@ -40,7 +40,22 @@ const CakeDetail = styled.p`
     width: 100%;
     font-size: 25px;
 
-`
+`;
+
+const DeleteCake = styled.button`
+    margin-top: 20px;
+    background: rgba(255,255,255,.6);
+    padding: 2vh;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px 4px;
+    width: 200px;
+    font-size: 20px;
+    
+    &:hover {
+        background: rgba(215,215,215,.6);
+    }
+`;
 
 
 const Cake = () => {
@@ -80,7 +95,7 @@ const Cake = () => {
                 <CakeDetail>Name: {cake.name}</CakeDetail>
                 <CakeDetail>Comment: {cake.comment}</CakeDetail>
                 <CakeDetail>Yum Factor: {cake.yumFactor}</CakeDetail>
-                <button onClick={deleteCake}>Delete Cake</button>
+                <DeleteCake onClick={deleteCake}>Delete Cake</DeleteCake>
             </CakeWrapper>
         </CakePageWrapper> : '');
 

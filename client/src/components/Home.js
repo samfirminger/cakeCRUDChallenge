@@ -10,21 +10,35 @@ const HomeWrapper = styled.div`
     text-align: center;
 `;
 
+const NewCakeButton = styled.button`
+    margin-top: 50px;
+    background: rgba(255,255,255,.6);
+    padding: 2vh;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px 4px;
+    width: 200px;
+    font-size: 20px;
+    
+    &:hover {
+        background: rgba(215,215,215,.6);
+    }
+`;
+
 class Home extends Component {
-    // Initialize the state
+
     constructor(props) {
         super(props);
         this.state = {
-            cakes: []
+            cakes: [],
+            isCreating: false
         }
     }
 
-    // Fetch the list on first mount
     componentDidMount() {
         this.getCakes();
     }
 
-    // Retrieves the list of items from the Express app
     getCakes = () => {
         fetch('/api/cakes')
             .then(res => res.json())
@@ -32,25 +46,27 @@ class Home extends Component {
                 cakes = cakes.data;
                 this.setState({cakes})
             })
-    }
+    };
+
+    openNewCakeForm = () => {
+        this.setState({isCreating: true});
+    };
 
     render() {
-        const {cakes} = this.state;
+        const {cakes, isCreating} = this.state;
 
         return (
             <div className="App">
                 <HomeWrapper>
-                <Link to={`/`} style={{ textDecoration: 'none', color: 'black' }}><h1>The Cake Database</h1></Link>
-                <NewCake/>
+                    <Link to={`/`} style={{textDecoration: 'none', color: 'black'}}><h1>The Cake Database</h1></Link>
+                    {isCreating ? <NewCake/> : <NewCakeButton onClick={this.openNewCakeForm}>Add New Cake</NewCakeButton>}
 
-                {cakes.length ? (
-                    <CakeList cakes={cakes}/>
-                ) : (
-                    <div>
-                        <h2>No Cakes Found</h2>
-                    </div>
-                )
-                }
+                    {cakes.length ? (<CakeList cakes={cakes}/>) : (
+                        <div>
+                            <h2>No Cakes Found</h2>
+                        </div>
+                    )
+                    }
                 </HomeWrapper>
             </div>
         );

@@ -6,7 +6,7 @@ import {device} from "./device";
 
 const sharedStyle = css`
     @media ${device.mobileS} {
-        width: 250px;
+        width: 300px;
 
     }
     
@@ -55,18 +55,19 @@ const DropDown = styled.select`
 
 `;
 
-const SelectLabel = styled.span`
-
-`;
-
 const SubmitButton = styled.button`
-    background: rgba(255,255,255,.4);
+    margin-top: 20px;
+    background: rgba(255,255,255,.6);
     padding: 2vh;
     border: none;
     cursor: pointer;
     border-radius: 4px 4px;
     width: 200px;
     font-size: 20px;
+    
+    &:hover {
+        background: rgba(215,215,215,.6);
+    }
 `;
 
 const NewCake = () => {
