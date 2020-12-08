@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import styled from "styled-components";
 import CakeList from "./CakeList";
+import NewCake from "./NewCake";
 import {Link} from "react-router-dom";
 
 const HomeWrapper = styled.div`
@@ -40,6 +41,7 @@ class Home extends Component {
             <div className="App">
                 <HomeWrapper>
                 <Link to={`/`} style={{ textDecoration: 'none', color: 'black' }}><h1>The Cake Database</h1></Link>
+                <NewCake/>
 
                 {cakes.length ? (
                     <CakeList cakes={cakes}/>

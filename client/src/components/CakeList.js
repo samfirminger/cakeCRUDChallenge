@@ -3,6 +3,11 @@ import React from "react";
 import styled from "styled-components";
 import {device} from "./device";
 
+const CakeListWrapper = styled.div`
+    margin-bottom: 50px;
+`;
+
+
 const CakeWrapper = styled.div`
     @media ${device.mobileS} {
         width: 100%;
@@ -37,7 +42,7 @@ const CakeName = styled.p`
 
 const CakeList = ({cakes}) => {
 
-    return <div>
+    return <CakeListWrapper>
     {cakes.map((item) => {
             return (
                 <CakeWrapper key={item.id}>
@@ -48,7 +53,7 @@ const CakeList = ({cakes}) => {
                 </CakeWrapper>
             );
         })}
-    </div>
+    </CakeListWrapper>
 
 };
 
