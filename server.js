@@ -94,13 +94,14 @@ app.post("/api/cake", (req, res, next) => {
     let cake = {
         name: req.body.name,
         comment: req.body.comment,
-        imageUrl: req.body.imageUrl
-    }
-    let sql = 'INSERT INTO cake (name, comment, imageUrl, yumFactor) VALUES (?,?,?,5)'
-    let params = [cake.name, cake.comment, cake.imageUrl]
+        imageUrl: req.body.imageUrl,
+        yumFactor: req.body.yumFactor
+    };
+    let sql = 'INSERT INTO cake (name, comment, imageUrl, yumFactor) VALUES (?,?,?,?)';
+    let params = [cake.name, cake.comment, cake.imageUrl, cake.yumFactor];
     db.run(sql, params, function (err, result) {
         if (err) {
-            res.status(400).json({"error": err.message})
+            res.status(400).json({"error": err.message});
             return;
         }
         res.json({

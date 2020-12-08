@@ -18,14 +18,14 @@ const FormInput = styled.input`
     border-left: none;
     background-color:transparent;
     outline: none;
-    color: white;
+    color: black;
     caret-color: white;
     width: 200px;
     height: 40px;
     font-size: 20px;
     
     ::placeholder {
-        color: white;
+        color: grey;
         font-size: 20px;
     }
 `;
@@ -38,7 +38,7 @@ const DropDown = styled.select`
     border-left: none;
     background-color:transparent;
     outline: none;
-    color: white;
+    color: grey;
     caret-color: white;
     width: 200px;
     height: 40px;
@@ -46,7 +46,7 @@ const DropDown = styled.select`
 
 
     ::placeholder {
-        color: white;
+        color: grey;
     }
 `;
 
@@ -88,13 +88,17 @@ const NewCake = () => {
             method: 'POST',
             headers: new Headers({'content-type': 'application/json'}),
             body: JSON.stringify(cake)
-        }).then(response => response.json());
+        }).then(response =>
+        {
+            response.json();
+            history.go(0);
+        });
 
         setName('');
         setComment('');
         setImageUrl('');
         setYumFactor('');
-        history.push("/");
+
     }
 
     return <NewCakeFormWrapper>
@@ -133,7 +137,6 @@ const NewCake = () => {
                     onChange={e => setImageUrl(e.target.value)}
                 />
             </div>
-
 
             <div  className="form-group">
                 <DropDown name="yumFactor" value={yumFactor} onChange={e => setYumFactor(e.target.value)}>

@@ -4,9 +4,12 @@ import {Route, Switch} from "react-router-dom";
 import {GlobalStyle} from "./components/GlobalStyle";
 import Home from "./components/Home"
 import Cake from "./components/Cake"
+import ScrollToTop from "./components/ScrollToTop";
 
 class App extends Component {
-  render() {
+
+
+    render() {
     const App = () => (
         <div>
             <GlobalStyle/>
@@ -18,7 +21,9 @@ class App extends Component {
     )
     return (
         <Switch>
-          <App/>
+            <ScrollToTop>
+            <App/>
+            </ScrollToTop>
         </Switch>
     );
   }

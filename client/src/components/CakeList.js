@@ -38,6 +38,7 @@ const CakeName = styled.p`
     font-size: 20px;
     max-width: 250px;
     margin: 0 auto;
+    margin-top: 20px;
 `;
 
 const CakeList = ({cakes}) => {
@@ -46,7 +47,7 @@ const CakeList = ({cakes}) => {
     {cakes.map((item) => {
             return (
                 <CakeWrapper key={item.id}>
-                    <Link to={`/cake/${item.id}`} style={{ textDecoration: 'none', color: 'black' }}>
+                    <Link to={`/cake/${item.id}`} style={{ textDecoration: 'none', color: 'black' }} >
                         <CakeImage src={item.imageUrl}/>
                         <CakeName>{item.name}</CakeName>
                     </Link>
