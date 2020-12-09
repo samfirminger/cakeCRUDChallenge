@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import CakeList from "./CakeList";
 import {Link} from "react-router-dom";
@@ -16,51 +16,37 @@ const HomeWrapper = styled.div`
     text-align: center;
 `;
 
-class Home extends Component {
+const Home = () => {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            cakes: [],
-            error: false
-        }
-    }
+    const [cakes, setCakes] = useState([]);
 
-    componentDidMount() {
-        this.getCakes();
-    }
-
-    getCakes = () => {
+    useEffect(() => {
         fetch('/api/cakes')
             .then(response => {
                 if (response.ok) {
                     return response.json().then(cakes => {
                         cakes = cakes.data;
-                        this.setState({cakes})
-                    }).catch(error => this.setState({error: true}));
+                        setCakes(cakes);
+                    })
                 } else {
                     this.setState({error: true})
                 }
-            }).catch(error => this.setState({error: true}));
-    };
+            }).catch(error => console.log(error));
+    }, []);
 
-    render() {
-        const {cakes} = this.state;
 
-        return (
-            <div className="App">
-                <HomeWrapper>
-                    <CakeIcon src={cake}/>
-                    <Link to={`/`} style={{textDecoration: 'none', color: 'black'}}><h1>The Cake Database</h1></Link>
+    return (
+        <div className="App">
+            <HomeWrapper>
+                <CakeIcon src={cake}/>
+                <Link to={`/`} style={{textDecoration: 'none', color: 'black'}}><h1>The Cake Database</h1></Link>
 
-                    {cakes.length && !this.state.error ? (<CakeList cakes={cakes}/>) : (
-                        <ErrorMessage error={true} message={'Could not fetch cakes'}/>
-                    )
-                    }
-                </HomeWrapper>
-            </div>
-        );
-    }
-}
+                {cakes.length ? (<CakeList cakes={cakes}/>) : (
+                    <ErrorMessage error={true} message={'Could not fetch cakes'}/>)}
+            </HomeWrapper>
+        </div>
+    );
+};
+
 
 export default Home;

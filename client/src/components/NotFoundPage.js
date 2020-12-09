@@ -15,5 +15,5 @@ const NotFoundPage = () => {
             <Link to={`/`} style={{textDecoration: 'none', color: 'black'}}><h1>Go to Home</h1></Link>
             <ErrorMessage error={true} message={'404 Page Not Found'}></ErrorMessage>
         </ErrorPageWrapper>;
-}
+};
 export default NotFoundPage;

@@ -31,7 +31,7 @@ const sharedInputStyle = css`
     caret-color: white;
     height: 40px;
     font-size: 20px;
-`
+`;
 
 const NewCakeFormWrapper = styled.div`
     margin: 0 auto;
@@ -102,12 +102,12 @@ const NewCake = () => {
             body: JSON.stringify(cake)
         }).then(response => {
             if(response.ok) {
-                response.json();
                 history.push("/");
             } else {
                 setPostError(true);
             }
         }).catch(error => {
+            console.log(error);
             setPostError(true);
         });
     }

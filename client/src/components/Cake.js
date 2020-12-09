@@ -112,6 +112,6 @@ const Cake = () => {
             </CakeWrapper> : <ErrorMessage error={true} message={'Cake not found'}/>}
     </CakePageWrapper>;
 
-}
+};
 
 export default Cake;
