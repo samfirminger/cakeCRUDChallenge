@@ -19,6 +19,7 @@ const HomeWrapper = styled.div`
 const Home = () => {
 
     const [cakes, setCakes] = useState([]);
+    const [hasFetched, setHasFetched] = useState(false);
 
     useEffect(() => {
         fetch('/api/cakes')
@@ -27,6 +28,7 @@ const Home = () => {
                     return response.json().then(cakes => {
                         cakes = cakes.data;
                         setCakes(cakes);
+                        setHasFetched(true);
                     })
                 } else {
                     this.setState({error: true})
@@ -41,7 +43,7 @@ const Home = () => {
                 <CakeIcon src={cake}/>
                 <Link to={`/`} style={{textDecoration: 'none', color: 'black'}}><h1>The Cake Database</h1></Link>
 
-                {cakes.length ? (<CakeList cakes={cakes}/>) : (
+                {hasFetched && cakes.length ? (<CakeList cakes={cakes}/>) : (
                     <ErrorMessage error={true} message={'Could not fetch cakes'}/>)}
             </HomeWrapper>
         </div>

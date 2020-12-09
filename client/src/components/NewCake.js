@@ -93,9 +93,7 @@ const NewCake = () => {
             imageUrl,
             yumFactor
         };
-
-        console.log(cake);
-
+        
         fetch(`/api/cake`, {
             method: 'POST',
             headers: new Headers({'content-type': 'application/json'}),
@@ -153,7 +151,7 @@ const NewCake = () => {
 
             <div className="form-group">
                 <DropDown name="yumFactor" value={yumFactor} onChange={e => setYumFactor(e.target.value)}>
-                    <option value="" disabled selected>Yum Factor</option>
+                    <option value="" disabled>Yum Factor</option>
                     <option value={1}>1</option>
                     <option value={2}>2</option>
                     <option value={3}>3</option>
