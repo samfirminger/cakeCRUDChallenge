@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import {useHistory, useParams} from "react-router";
 import ErrorMessage from "./ErrorMessage";
 import CakeImage from "./CakeImage";
+import GoToHome from "./GoToHome";
 
 const CakePageWrapper = styled.div`
     margin: 0 auto;
@@ -78,7 +79,7 @@ const Cake = () => {
 
 
     return <CakePageWrapper>
-        <Link to={`/`} style={{textDecoration: 'none', color: 'black'}}><h1>Go to Home</h1></Link>
+        <GoToHome/>
         {cake ?
             <CakeWrapper>
                 <CakeImage src={cake.imageUrl} mobileWidth={250} laptopWidth={400}/>

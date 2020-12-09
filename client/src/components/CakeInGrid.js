@@ -11,7 +11,6 @@ const CakeWrapper = styled.div`
 
     @media ${device.tablet} {
         width: 50%;
-
     }
     
     @media ${device.laptopL} {

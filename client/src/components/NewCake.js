@@ -5,6 +5,7 @@ import {css} from 'styled-components';
 import {device} from "./device";
 import {Link} from "react-router-dom";
 import ErrorMessage from "./ErrorMessage";
+import GoToHome from "./GoToHome";
 
 const sharedInputStyle = css`
     @media ${device.mobileS} {
@@ -93,7 +94,7 @@ const NewCake = () => {
             imageUrl,
             yumFactor
         };
-        
+
         fetch(`/api/cake`, {
             method: 'POST',
             headers: new Headers({'content-type': 'application/json'}),
@@ -112,7 +113,7 @@ const NewCake = () => {
 
 
     return <NewCakeFormWrapper>
-        <Link to={`/`} style={{textDecoration: 'none', color: 'black'}}><h1>Home</h1></Link>
+        <GoToHome/>
         <NewCakeForm onSubmit={handleSubmit}>
             <div className="form-group">
                 <FormInput
