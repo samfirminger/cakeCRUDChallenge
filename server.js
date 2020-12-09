@@ -7,9 +7,8 @@ var cors = require('cors');
 var bodyParser = require("body-parser");
 const path = require('path');
 
-// Serve the static files from the React app
+// Set up app
 app.use(express.static(path.join(__dirname, 'client/build')));
-
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended:true }));
 app.use(bodyParser.json());
@@ -20,10 +19,10 @@ app.get("/", (req, res) => {
     res.json({"message": "Ok"})
 });
 
-// Insert here other API endpoints
+// Get all cakes
 app.get("/api/cakes", (req, res) => {
     console.log("Getting all cakes...");
-    let sql = "select * from cake";
+    let sql = "SELECT * FROM cake";
     let params = [];
     db.all(sql, params, (err, rows) => {
         if (err) {
@@ -37,10 +36,11 @@ app.get("/api/cakes", (req, res) => {
     });
 });
 
+// Getting a cake by id
 app.get("/api/cake/:id", (req, res) => {
     console.log(`Getting cake for id ${req.params.id}...`);
-    var sql = "select * from cake where id = ?";
-    var params = [req.params.id];
+    let sql = "SELECT * FROM cake WHERE id = ?";
+    let params = [req.params.id];
     db.get(sql, params, (err, row) => {
         if (err) {
             res.status(400).json({"error": err.message});
@@ -53,6 +53,7 @@ app.get("/api/cake/:id", (req, res) => {
     });
 });
 
+// Delete a cake
 app.delete("/api/cake/:id", (req, res) => {
     console.log(`Deleting cake for id ${req.params.id}...`);
     let sql = "DELETE FROM cake where id = ?";
@@ -69,7 +70,7 @@ app.delete("/api/cake/:id", (req, res) => {
     });
 });
 
-
+// Post a new Cake
 app.post("/api/cake", (req, res) => {
     console.log('Creating a new cake...');
     let errors = [];
@@ -109,9 +110,9 @@ app.post("/api/cake", (req, res) => {
 })
 
 
-// Handles any requests that don't match the ones above
+// Handles any request that don't match
 app.get('*', (req,res) =>{
-    res.sendFile(path.join(__dirname+'/client/build/index.html'));
+    res.sendFile(path.join(__dirname+'/client/public/index.html'));
 });
 
 // Server port

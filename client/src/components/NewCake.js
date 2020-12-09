@@ -4,6 +4,7 @@ import {useHistory} from "react-router";
 import {css} from 'styled-components';
 import {device} from "./device";
 import {Link} from "react-router-dom";
+import ErrorMessage from "./ErrorMessage";
 
 const sharedStyle = css`
     @media ${device.mobileS} {
@@ -80,7 +81,7 @@ const NewCake = () => {
     const [comment, setComment] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [yumFactor, setYumFactor] = useState('');
-    const [disabled, setDisabled] = useState(true);
+    const [postError, setPostError] = useState(false);
     const history = useHistory();
 
     function handleSubmit(event) {
@@ -100,21 +101,17 @@ const NewCake = () => {
             headers: new Headers({'content-type': 'application/json'}),
             body: JSON.stringify(cake)
         }).then(response => {
-            response.json();
-            history.push('/');
+            if(response.ok) {
+                response.json();
+                history.push('/');
+            } else {
+                setPostError(true);
+            }
+        }).catch(error => {
+            setPostError(true);
         });
-
-        setName('');
-        setComment('');
-        setImageUrl('');
-        setYumFactor('');
-
     }
 
-    function createButtonDisabled() {
-        console.log(name, comment, imageUrl, yumFactor);
-        return name && comment && imageUrl && yumFactor ? 'true' : 'false';
-    }
 
     return <NewCakeFormWrapper>
         <Link to={`/`} style={{textDecoration: 'none', color: 'black'}}><h1>Home</h1></Link>
@@ -158,10 +155,10 @@ const NewCake = () => {
                 <DropDown name="yumFactor" value={yumFactor} onChange={e => setYumFactor(e.target.value)}>
                     <option value="" disabled selected>Yum Factor</option>
                     <option value={1}>1</option>
-                    <option value={1}>2</option>
-                    <option value={1}>3</option>
-                    <option value={1}>4</option>
-                    <option value={1}>5</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                    <option value={5}>5</option>
                 </DropDown>
             </div>
 
@@ -170,6 +167,8 @@ const NewCake = () => {
                     Create
                 </SubmitButton>
             </div>
+
+            <ErrorMessage error={postError} message={'There was an error posting the new cake'}/>
         </NewCakeForm>
     </NewCakeFormWrapper>;
 

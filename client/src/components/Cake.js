@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {Link} from "react-router-dom";
 import {device} from "./device";
 import {useHistory, useParams} from "react-router";
+import ErrorMessage from "./ErrorMessage";
 
 const CakePageWrapper = styled.div`
     margin: 0 auto;
@@ -15,7 +16,7 @@ const CakeWrapper = styled.div`
     margin: 0 auto;
     margin-top: 50px;
     text-align: center;
-
+    font-size: 25px;
 `;
 
 const CakeImage = styled.img`
@@ -38,13 +39,12 @@ const CakeImage = styled.img`
 const CakeDetail = styled.p`
     display: block;
     width: 100%;
-    font-size: 25px;
 
 `;
 
 const DeleteCake = styled.button`
     margin-top: 20px;
-    background: rgba(255,255,255,.6);
+    background: rgba(255,0,0,.6);
     padding: 2vh;
     border: none;
     cursor: pointer;
@@ -53,7 +53,7 @@ const DeleteCake = styled.button`
     font-size: 20px;
     
     &:hover {
-        background: rgba(215,215,215,.6);
+        background: rgba(179,0,0,.8);
     }
 `;
 
@@ -61,6 +61,7 @@ const DeleteCake = styled.button`
 const Cake = () => {
 
     const [cake, setCake] = useState({});
+    const [deleteError, setDeleteError] = useState(false);
     const history = useHistory();
     let params = useParams();
 
@@ -71,7 +72,6 @@ const Cake = () => {
             .then(cake => {
                 cake = cake.data;
                 setCake(cake);
-                window.scrollTo(0, 0);
             })
     }, [params]);
 
@@ -81,23 +81,32 @@ const Cake = () => {
         fetch(`/api/cake/${params.id}`, {
             method: 'DELETE'
         }).then(response => {
-            response.json();
-            history.push("/");
-            window.scrollTo(0, 0);
+            if (response.ok) {
+                response.json();
+                history.push("/");
+                window.scrollTo(0, 0);
+            } else {
+                setDeleteError(true);
+            }
+
+        }).catch(error => {
+            setDeleteError(true);
         });
     }
 
 
-        return (cake ? <CakePageWrapper>
+        return <CakePageWrapper>
             <Link to={`/`} style={{textDecoration: 'none', color: 'black'}}><h1>Home</h1></Link>
+            {cake ?
             <CakeWrapper>
                 <CakeImage src={cake.imageUrl}/>
                 <CakeDetail>Name: {cake.name}</CakeDetail>
                 <CakeDetail>Comment: {cake.comment}</CakeDetail>
                 <CakeDetail>Yum Factor: {cake.yumFactor}</CakeDetail>
                 <DeleteCake onClick={deleteCake}>Delete Cake</DeleteCake>
-            </CakeWrapper>
-        </CakePageWrapper> : '');
+                <ErrorMessage error={deleteError} message={'There was a problem deleting the cake'}/>
+            </CakeWrapper> : <ErrorMessage error={true} message={'Cake not found'}/>}
+        </CakePageWrapper>;
 
 }
 

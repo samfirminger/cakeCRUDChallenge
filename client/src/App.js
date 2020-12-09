@@ -6,6 +6,7 @@ import Home from "./components/Home"
 import Cake from "./components/Cake"
 import NewCake from "./components/NewCake";
 import ScrollToTop from "./components/ScrollToTop";
+import NotFoundPage from "./components/NotFoundPage";
 
 class App extends Component {
 
@@ -15,9 +16,10 @@ class App extends Component {
         <div>
             <GlobalStyle/>
             <Switch>
-                <Route exact path='/' component={props => <Home {...props} />}/>
+                <Route exact path='/' component={Home}/>
                 <Route path='/cake/:id' component={props => <Cake {...props} />}/>
-                <Route path='/newCake' component={props => <NewCake {...props} />}/>
+                <Route path='/newCake' component={NewCake}/>
+                <Route path="*" component={NotFoundPage} />
             </Switch>
         </div>
     )
