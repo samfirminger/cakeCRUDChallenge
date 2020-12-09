@@ -73,11 +73,11 @@ const Cake = () => {
 
     useEffect(() => {
         fetch(`/api/cake/${params.id}`)
-            .then(res => res.json())
+            .then(response => response.json())
             .then(cake => {
                 cake = cake.data;
                 setCake(cake);
-            })
+            });
     }, [params]);
 
 
@@ -93,16 +93,15 @@ const Cake = () => {
             } else {
                 setDeleteError(true);
             }
-
         }).catch(error => {
             setDeleteError(true);
         });
     }
 
 
-        return <CakePageWrapper>
-            <Link to={`/`} style={{textDecoration: 'none', color: 'black'}}><h1>Home</h1></Link>
-            {cake ?
+    return <CakePageWrapper>
+        <Link to={`/`} style={{textDecoration: 'none', color: 'black'}}><h1>Go to Home</h1></Link>
+        {cake ?
             <CakeWrapper>
                 <CakeImage src={cake.imageUrl}/>
                 <CakeDetail>Name: {cake.name}</CakeDetail>
@@ -111,7 +110,7 @@ const Cake = () => {
                 <DeleteCake onClick={deleteCake}>Delete Cake</DeleteCake>
                 <ErrorMessage error={deleteError} message={'There was a problem deleting the cake'}/>
             </CakeWrapper> : <ErrorMessage error={true} message={'Cake not found'}/>}
-        </CakePageWrapper>;
+    </CakePageWrapper>;
 
 }
 

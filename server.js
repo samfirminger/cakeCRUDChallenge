@@ -2,7 +2,6 @@
 var express = require("express");
 var app = express();
 var db = require("./database.js");
-var md5 = require("md5");
 var cors = require('cors');
 var bodyParser = require("body-parser");
 const path = require('path');
@@ -10,7 +9,7 @@ const path = require('path');
 // Set up app
 app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended:true }));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 
@@ -83,20 +82,23 @@ app.post("/api/cake", (req, res) => {
     if (!req.body.imageUrl) {
         errors.push("No imageUrl specified");
     }
+    if (!req.body.yumFactor) {
+        errors.push("No yumFactor specified");
+    }
     if (errors.length) {
         res.status(400).json({"error": errors.join(",")});
         return;
     }
 
     let cake = {
-        name: req.body.name,
-        comment: req.body.comment,
+        name: req.body.name.substring(0, 30),
+        comment: req.body.comment.substring(0, 200),
         imageUrl: req.body.imageUrl,
         yumFactor: req.body.yumFactor
     };
     let sql = 'INSERT INTO cake (name, comment, imageUrl, yumFactor) VALUES (?,?,?,?)';
     let params = [cake.name, cake.comment, cake.imageUrl, cake.yumFactor];
-    db.run(sql, params, function (err, result) {
+    db.run(sql, params, function (err) {
         if (err) {
             res.status(400).json({"error": err.message});
             return;
@@ -107,12 +109,12 @@ app.post("/api/cake", (req, res) => {
             "id": this.lastID
         })
     });
-})
+});
 
 
 // Handles any request that don't match
-app.get('*', (req,res) =>{
-    res.sendFile(path.join(__dirname+'/client/public/index.html'));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/client/public/index.html'));
 });
 
 // Server port

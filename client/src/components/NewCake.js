@@ -6,7 +6,7 @@ import {device} from "./device";
 import {Link} from "react-router-dom";
 import ErrorMessage from "./ErrorMessage";
 
-const sharedStyle = css`
+const sharedInputStyle = css`
     @media ${device.mobileS} {
         width: 300px;
 
@@ -46,7 +46,7 @@ const NewCakeForm = styled.form`
 `;
 
 const FormInput = styled.input`
-    ${sharedStyle}
+    ${sharedInputStyle}
     
     ::placeholder {
         color: grey;
@@ -55,7 +55,7 @@ const FormInput = styled.input`
 `;
 
 const DropDown = styled.select`
-    ${sharedStyle}
+    ${sharedInputStyle}
     border-width: 2px;
 
 `;
@@ -103,7 +103,7 @@ const NewCake = () => {
         }).then(response => {
             if(response.ok) {
                 response.json();
-                history.push('/');
+                history.push("/");
             } else {
                 setPostError(true);
             }
@@ -164,7 +164,7 @@ const NewCake = () => {
 
             <div>
                 <SubmitButton type="submit" disabled={!(name && comment && imageUrl && yumFactor)}>
-                    Create
+                    Create Cake
                 </SubmitButton>
             </div>
 

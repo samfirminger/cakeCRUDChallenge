@@ -3,15 +3,16 @@ import styled from "styled-components";
 import CakeList from "./CakeList";
 import {Link} from "react-router-dom";
 import cake from "../images/cake.png";
+import ErrorMessage from "./ErrorMessage";
 
 const CakeIcon = styled.img`
     height: 60px;
     width: 60px;
-`
+`;
 
 const HomeWrapper = styled.div`
     margin: 0 auto;
-    margin-top: 100px;
+    margin-top: 30px;
     text-align: center;
 `;
 
@@ -20,7 +21,8 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            cakes: []
+            cakes: [],
+            error: false
         }
     }
 
@@ -30,11 +32,16 @@ class Home extends Component {
 
     getCakes = () => {
         fetch('/api/cakes')
-            .then(res => res.json())
-            .then(cakes => {
-                cakes = cakes.data;
-                this.setState({cakes})
-            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json().then(cakes => {
+                        cakes = cakes.data;
+                        this.setState({cakes})
+                    }).catch(error => this.setState({error: true}));
+                } else {
+                    this.setState({error: true})
+                }
+            }).catch(error => this.setState({error: true}));
     };
 
     render() {
@@ -46,10 +53,8 @@ class Home extends Component {
                     <CakeIcon src={cake}/>
                     <Link to={`/`} style={{textDecoration: 'none', color: 'black'}}><h1>The Cake Database</h1></Link>
 
-                    {cakes.length ? (<CakeList cakes={cakes}/>) : (
-                        <div>
-                            <h2>No Cakes Found</h2>
-                        </div>
+                    {cakes.length && !this.state.error ? (<CakeList cakes={cakes}/>) : (
+                        <ErrorMessage error={true} message={'Could not fetch cakes'}/>
                     )
                     }
                 </HomeWrapper>
