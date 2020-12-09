@@ -72,30 +72,13 @@ app.delete("/api/cake/:id", (req, res) => {
 // Post a new Cake
 app.post("/api/cake", (req, res) => {
     console.log('Creating a new cake...');
-    let errors = [];
-    if (!req.body.name) {
-        errors.push("No name specified");
-    }
-    if (!req.body.comment) {
-        errors.push("No comment specified");
-    }
-    if (!req.body.imageUrl) {
-        errors.push("No imageUrl specified");
-    }
-    if (!req.body.yumFactor) {
-        errors.push("No yumFactor specified");
-    }
+    let errors = checkAllFieldsPresent(req.body);
     if (errors.length) {
         res.status(400).json({"error": errors.join(",")});
         return;
     }
 
-    let cake = {
-        name: req.body.name.substring(0, 30),
-        comment: req.body.comment.substring(0, 200),
-        imageUrl: req.body.imageUrl,
-        yumFactor: req.body.yumFactor
-    };
+    let cake = createCakeRecord(req.body);
     let sql = 'INSERT INTO cake (name, comment, imageUrl, yumFactor) VALUES (?,?,?,?)';
     let params = [cake.name, cake.comment, cake.imageUrl, cake.yumFactor];
     db.run(sql, params, function (err) {
@@ -110,6 +93,34 @@ app.post("/api/cake", (req, res) => {
         })
     });
 });
+
+function checkAllFieldsPresent(body) {
+    let errors = [];
+    if (!body.name) {
+        errors.push("No name specified");
+    }
+    if (!body.comment) {
+        errors.push("No comment specified");
+    }
+    if (!body.imageUrl) {
+        errors.push("No imageUrl specified");
+    }
+    if (!body.yumFactor) {
+        errors.push("No yumFactor specified");
+    }
+
+    return errors;
+}
+
+function createCakeRecord(body) {
+
+    return {
+        name: body.name.substring(0, 30),
+        comment: body.comment.substring(0, 200),
+        imageUrl: body.imageUrl,
+        yumFactor: body.yumFactor
+    };
+}
 
 
 // Handles any request that don't match
