@@ -3,7 +3,6 @@ import styled from "styled-components";
 import {useHistory} from "react-router";
 import {css} from 'styled-components';
 import {device} from "./device";
-import {Link} from "react-router-dom";
 import ErrorMessage from "./ErrorMessage";
 import GoToHome from "./GoToHome";
 
