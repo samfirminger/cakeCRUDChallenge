@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
-import CakeList from "./CakeList";
+import CakeGrid from "./CakeGrid";
 import {Link} from "react-router-dom";
 import cake from "../images/cake.png";
 import ErrorMessage from "./ErrorMessage";
@@ -43,7 +43,7 @@ const Home = () => {
                 <CakeIcon src={cake}/>
                 <Link to={`/`} style={{textDecoration: 'none', color: 'black'}}><h1>The Cake Database</h1></Link>
 
-                {hasFetched && cakes.length ? (<CakeList cakes={cakes}/>) : (
+                {hasFetched && cakes.length ? (<CakeGrid cakes={cakes}/>) : (
                     <ErrorMessage error={true} message={'Could not fetch cakes'}/>)}
             </HomeWrapper>
         </div>

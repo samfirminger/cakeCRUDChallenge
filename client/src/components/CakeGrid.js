@@ -3,13 +3,13 @@ import styled from "styled-components";
 import plus from "../images/plus.png";
 import CakeInGrid from "./CakeInGrid";
 
-const CakeListWrapper = styled.div`
+const CakeGridWrapper = styled.div`
     overflow: hidden;
     margin-bottom: 100px;
 `;
 
 
-const CakeList = ({cakes}) => {
+const CakeGrid = ({cakes}) => {
 
     const cakeMap = cakes.map((item) =>
         <CakeInGrid key={item.id} link={`/cake/${item.id}`} src={item.imageUrl} label={item.name}/>
@@ -17,9 +17,9 @@ const CakeList = ({cakes}) => {
 
     cakeMap.unshift(<CakeInGrid key={'addNew'} link={'/newCake'} src={plus} label={'Add New Cake'}/>);
 
-    return <CakeListWrapper>
+    return <CakeGridWrapper>
         {cakeMap}
-    </CakeListWrapper>
+    </CakeGridWrapper>
 };
 
-export default CakeList;
+export default CakeGrid;

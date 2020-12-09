@@ -14,7 +14,7 @@ const CakeWrapper = styled.div`
 
     }
     
-    @media ${device.laptop} {
+    @media ${device.laptopL} {
         width: 20%;
     }
     
